@@ -50,9 +50,9 @@ module BracketGraph
 
     def inspect
       """#<BracketGraph::Seat:#{position}
-      @from=#{from.map(&:position).inspect}
+      @from_seat=#{from.map(&:position).inspect}
       @round=#{round}
-      @to=#{(to && to.position || nil).inspect}
+      @to_seat=#{(to && to.position || nil).inspect}
       @loser_to=#{(loser_to && loser_to.position || nil).inspect}
       @payload=#{payload.inspect}>"""
     end
