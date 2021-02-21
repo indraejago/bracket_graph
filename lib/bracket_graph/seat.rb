@@ -1,13 +1,13 @@
 module BracketGraph
   class Seat
     # Source match for this seat
-    attr_reader :from_seat
+    attr_reader :from
     # Seat position in the graph. It acts like an Id
     attr_reader :position
     # Seat payload. It should be used to keep track of the player and of its status in this seat
     attr_accessor :payload
     # Destination match of this seat.
-    attr_accessor :to_seat
+    attr_accessor :to
     # Destination match of this seat for the loser participant.
     attr_accessor :loser_to
 
@@ -18,11 +18,11 @@ module BracketGraph
     def initialize position, to: nil, round: nil
       round ||= to.round - 1 if to
       @position, @to, @round = position, to, round
-      @from_seat = []
+      @from = []
     end
 
     def starting?
-      from_seat.nil? || from_seat.empty?
+      from.nil? || from.empty?
     end
 
     def final?
@@ -45,14 +45,14 @@ module BracketGraph
       data = { position: position, round: round }
       data.update payload: payload if payload
       data.update loser_to: loser_to.position if loser_to
-      from && data.update(from: from_seat.map(&:as_json)) || data
+      from && data.update(from: from.map(&:as_json)) || data
     end
 
     def inspect
       """#<BracketGraph::Seat:#{position}
       @from_seat=#{from.map(&:position).inspect}
       @round=#{round}
-      @to_seat=#{(to && to.position || nil).inspect}
+      @to=#{(to && to.position || nil).inspect}
       @loser_to=#{(loser_to && loser_to.position || nil).inspect}
       @payload=#{payload.inspect}>"""
     end
